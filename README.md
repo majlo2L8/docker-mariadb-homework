@@ -12,4 +12,5 @@ MySQL/MariaDB
 
 PREREQUISITIES
     
-    Install docker-ce
+    Docker
+    Docker Compose
