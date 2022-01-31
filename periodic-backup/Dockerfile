@@ -7,7 +7,6 @@ RUN apt-get update && \
     apt-get -y install cron
     apt add --no-cache mariadb-client && \
     chmod a+x /etc/periodic/30min/*
-    # Create the log file to be able to run tail
     touch /var/log/cron.log
 
 CMD cron && tail -f /var/log/cron.log
