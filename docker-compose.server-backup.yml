@@ -1,0 +1,29 @@
+version: '1.29'
+
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: homework-mariadb
+    environment:
+      MYSQL_DATABASE: HOMEWORK
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3307:3307"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/mysql/data:/var/lib/mysql
+    restart: always
+
+  periodic-backup:
+    build: ./periodic-backup
+    container_name: database-backup
+    environment:
+      MYSQL_CONTAINER_NAME: homework-mariadb
+      MYSQL_DATABASE: HOMEWORK
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/backup:/var/backup
+    command: crond -f -d 8
+    restart: always
